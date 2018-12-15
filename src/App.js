@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Button, Tree, Icon, Select, Input, Checkbox} from 'antd'
+import {Button, Tree, Icon, Select, Input, Checkbox, Tooltip} from 'antd'
 import './App.scss'
 
 let $this = null
@@ -26,6 +26,13 @@ export default class App extends Component {
                     type  : 'boolean',
                     name  : 'Top Boolean',
                     value : false
+                },
+                {
+                    title : '0-4',
+                    key   : '0-4',
+                    type  : 'number',
+                    name  : 'Top Number',
+                    value : 24
                 },
                 {
                     title : '0-0',
@@ -86,29 +93,41 @@ export default class App extends Component {
         let renderContent = item => {
             switch(node.type) {
                 case 'text':
-                    return <Input className='content text' size="small"
-                                  defaultValue='value' placeholder="value"
-                                  value={node.value} onChange={()=> {}}
-                                  onInput={e=> {
-                                      node.value = e.target.value
-                                      $this.setState({})
-                                  }}/>
+                    return <Tooltip
+                        trigger={['focus']}
+                        title={'Put content here'}
+                        placement="topLeft">
+                        <Input className='content text' size="small"
+                               defaultValue='value' placeholder="value"
+                               value={node.value} onChange={()=> {}}
+                               onInput={e=> {
+                                   node.value = e.target.value
+                                   $this.setState({})}}/>
+                    </Tooltip>
                 case 'boolean':
-                    return   <Checkbox checked={node.value} onChange={e=>{
-                        node.value = e.target.checked
-                        $this.setState({})
-                    }}/>
+                    return <Tooltip
+                        trigger={['focus']}
+                        title={'Check boolean value'}
+                        placement="topLeft">
+                        <Checkbox checked={node.value} onChange={e=>{
+                            node.value = e.target.checked
+                            $this.setState({})}}/>
+                    </Tooltip>
                 case 'type':
                 case 'array':
                     return <span/>
                 case 'number':
-                    return <Input className='content text' size="small"
-                                  defaultValue='value' placeholder="value"
-                                  value={node.value} onChange={()=> {}}
-                                  onInput={e=> {
-                                      node.value = parseFloat(e.target.value)
-                                      $this.setState({})
-                                  }}/>
+                    return <Tooltip
+                        trigger={['focus']}
+                        title={'Put value here'}
+                        placement="topLeft">
+                        <Input className='content text' size="small"
+                               defaultValue='value' placeholder="value"
+                               value={node.value} onChange={()=> {}}
+                               onInput={e=> {
+                                   node.value = parseFloat(e.target.value)
+                                   $this.setState({})}}/>
+                    </Tooltip>
                 default:
                     throw new Error(item.type)
             }
@@ -116,13 +135,17 @@ export default class App extends Component {
 
         return (
             <div className='node'>
-                <Input className='name' size="small"
-                       defaultValue='name' placeholder="name" value={node.name}
-                       onChange={()=> {}}
-                       onInput={e=> {
-                           node.name  = e.target.value
-                           $this.setState({})
-                       }}/>
+                <Tooltip
+                    trigger={['focus']}
+                    title={'Edit name here'}
+                    placement="topLeft">
+                    <Input className='name' size="small"
+                           defaultValue='name' placeholder="name" value={node.name}
+                           onChange={()=> {}}
+                           onInput={e=> {
+                               node.name  = e.target.value
+                               $this.setState({})}}/>
+                </Tooltip>
                 <Select value={node.type} defaultValue="text" size='small' style={{ width: 100 }} onChange={e=> {
                     node.type = e
                     switch(node.type) {
@@ -138,13 +161,12 @@ export default class App extends Component {
                         case 'array':
                         case 'type':
                             node.value = [
-                                {title: 'name ...', key: `${node.key}0`, type: 'text', value: 'value ...'},
+                                {title: 'name ...', key: `${node.key}0`, type: 'text', value: ''},
                                 { key: `button ${node.key}`, is_button : true }
                             ]
                             break
                     }
-                    $this.setState({})
-                }}>
+                    $this.setState({})}}>
                     {this.primitiveTypes.concat(this.complexTypes).map(t=> <Select.Option key={t} value={t}>{t}</Select.Option>)}
                 </Select>
                 {renderContent(node)}

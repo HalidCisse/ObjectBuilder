@@ -10,6 +10,13 @@
       display: none;
     }
 
+    .ant-select-selection{
+      border: none;
+      .ant-select-focused, .ant-select-selection:active{
+        box-shadow: none;
+      }
+    }
+
     > li span.ant-tree-node-content-wrapper:hover:before{
       background: #19171705 !important;
     }
