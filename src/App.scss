@@ -49,27 +49,19 @@
           &:focus{
             box-shadow: none;
           }
-        }
-
-        .name{
-          margin-left: 5px;
-          border: none;
 
           &:focus, &:hover{
             border: dashed 1px gainsboro;
           }
         }
 
+        .name{
+          margin-left: 5px;
+        }
+
         .ant-select-sm{
           margin-left: 5px;
           margin-right: 5px;
-        }
-
-        .content{
-
-          &.text{
-
-          }
         }
       }
     }
