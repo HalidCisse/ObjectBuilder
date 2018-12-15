@@ -7,64 +7,70 @@ export default class App extends Component {
 
     constructor(props) {
         super(props)
+        $this = this
+        this.nodeTypes = [
+            'text', 'boolean', 'number', 'array', 'type'
+        ]
 
         this.state = {
-            nodes:[{
-                title : '0-0',
-                key   : '0-0',
-                type  : 'text',
-                value : 'blah blah'
-
-                //type  : 'array',
-                /*value: [
-                    {
-                        title : '0-0-0',
-                        key   : '0-0-0',
-                        type  : 'array',
-
-                        value: [
-                            { title: 'text',    key: 'text',    type  : 'text',    value : 'blah blah'},
-                            { title: 'boolean', key: 'boolean', type  : 'boolean', value : false },
-                            /!*{ title: 'number',  key: 'number',  type  : 'text',    value : 5 },
-                            { title: 'array',   key: 'array',   type  : 'array',   value : [] },*!/
-                            { key: '0-0-0-2', is_button : true }
-                        ]
-                    },
-                    {
-                        title : '0-0-1',
-                        key   : '0-0-1',
-                        type  : 'array',
-
-                        value: [
-                            { title: '0-0-1-0', key: '0-0-1-0', type  : 'text', value : '' },
-                            { title: '0-0-1-1', key: '0-0-1-1', type  : 'text', value : '' },
-                            { key: '0-0-1-2', is_button : true }
-                        ]
-                    },
-                    { key: '0-0-2', is_button : true }
-                ]*/
-            },
+            nodes:[
                 {
                     title : '0-1',
                     key   : '0-1',
                     type  : 'boolean',
                     value : false
-                }
+                },
+                {
+                    title : '0-0',
+                    key   : '0-0',
+                    type  : 'array',
+                    value: [
+                        {
+                            title : '0-0-0',
+                            key   : '0-0-0',
+                            type  : 'array',
+
+                            value: [
+                                { title: 'text',    key: 'text',    type  : 'text',    value : 'blah blah'},
+                                { title: 'boolean', key: 'boolean', type  : 'boolean', value : false },
+                                /*{ title: 'number',  key: 'number',  type  : 'text',    value : 5 },
+                                { title: 'array',   key: 'array',   type  : 'array',   value : [] },*/
+                                { key: '0-0-0-2', is_button : true }
+                            ]
+                        },
+                        {
+                            title : '0-0-1',
+                            key   : '0-0-1',
+                            type  : 'array',
+
+                            value: [
+                                { title: '0-0-1-0', key: '0-0-1-0', type  : 'text', value : '' },
+                                { title: '0-0-1-1', key: '0-0-1-1', type  : 'text', value : '' },
+                                { key: '0-0-1-2', is_button : true }
+                            ]
+                        },
+                        { key: '0-0-2', is_button : true }
+                    ]
+                },
+                { key: '0-2', is_button : true }
             ]
         }
-
-        this.nodeTypes = [
-            'text', 'boolean', 'number', 'array', 'type'
-        ]
-        $this = this
     }
 
     componentDidMount(){
-        this.setState({nodes:localStorage.nodes})
+        this.setState({nodes:JSON.parse(localStorage.nodes||this.state.nodes)})
     }
 
     componentWillUnmount(){
         localStorage.setItem('nodes', JSON.stringify(this.state.nodes))
+    }
+
+    componentDidUpdate(){
+        localStorage.setItem('nodes', JSON.stringify(this.state.nodes))
+    }
+
+    componentDidCatch(){
+        localStorage.clear()
     }
 
     renderNode = node => {
@@ -89,7 +95,10 @@ export default class App extends Component {
                 case 'type':
                     throw new Error(`${item.type} is not implemented`)
                 default:
+                {
+                    debugger
                     throw new Error(item.type)
+                }
             }
         }
 
@@ -136,10 +145,6 @@ export default class App extends Component {
 
     }
 
-    onSelect = (selectedKeys, info) => {
-        //console.log('selected', selectedKeys, info)
-    }
-
     generateIcon = node => {
         const {expanded, children, dataRef:{value, type, is_button}={}} = node
         // console.log('generateIcon', node)
@@ -149,18 +154,6 @@ export default class App extends Component {
         }*/
 
         return <Icon type={Array.isArray(value) ? (expanded ? 'minus-square' : 'plus-square'):'file'} />
-    }
-
-    onExpand = expandedKeys => {
-        /*this.setState({
-            expandedKeys,
-            autoExpandParent: false
-        })*/
-    }
-
-    onNodeLoad = (loadedKeys, {event, node}) =>{
-        console.log('onNodeLoad')
-        debugger
     }
 
     renderNodes = node => {
@@ -181,24 +174,18 @@ export default class App extends Component {
     }
 
     render() {
-        const {nodes, expandedKeys} = this.state
-        return (
-            <div className="app">
-                <header>
-                    Hello
-                </header>
+        return <div className="app">
+            <header>
+                Hello This Is A Dynamic Property Builder By Halid Cisse
+            </header>
 
-                <Tree.DirectoryTree
-                    multiple
-                    defaultExpandAll
-                    showLine
-                    showIcon
-                    onLoad = {this.onNodeLoad}
-                    onSelect={this.onSelect}
-                    onExpand={this.onExpand}>
-                    {this.renderNodes(nodes)}
-                </Tree.DirectoryTree>
-            </div>
-        )
+            <Tree.DirectoryTree
+                multiple
+                defaultExpandAll
+                showLine
+                showIcon>
+                {this.renderNodes(this.state.nodes)}
+            </Tree.DirectoryTree>
+        </div>
     }
 }

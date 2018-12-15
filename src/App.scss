@@ -1,8 +1,11 @@
 .app {
+  padding: 20px;
+
+  header{
+    margin-bottom: 30px;
+  }
 
   .ant-tree{
-    margin-left: 20px;
-
     .ant-tree-switcher{
       display: none;
     }
@@ -60,6 +63,10 @@
 
     .ant-tree-treenode-switcher-open{
       background: transparent;
+    }
+
+    .anticon-file{
+      display: none;
     }
 
     .end-handle{
