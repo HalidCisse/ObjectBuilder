@@ -15,24 +15,34 @@ export default class App extends Component {
         this.state = {
             nodes:[
                 {
+                    title : '0-3',
+                    key   : '0-3',
+                    type  : 'text',
+                    name  : 'Top Text',
+                    value : 'text value'
+                },
+                {
                     title : '0-1',
                     key   : '0-1',
                     type  : 'boolean',
+                    name  : 'Top Node',
                     value : false
                 },
                 {
                     title : '0-0',
                     key   : '0-0',
                     type  : 'array',
+                    name  : 'array top',
                     value: [
                         {
                             title : '0-0-0',
                             key   : '0-0-0',
                             type  : 'array',
+                            name:'array nested',
 
                             value: [
-                                { title: 'text',    key: 'text',    type  : 'text',    value : 'blah blah'},
-                                { title: 'boolean', key: 'boolean', type  : 'boolean', value : false },
+                                { title: 'text',    key: 'text',    type  : 'text', name:'c',  value : 'c'},
+                                { title: 'boolean', key: 'boolean', type  : 'boolean', name:'d', value : false },
                                 /*{ title: 'number',  key: 'number',  type  : 'text',    value : 5 },
                                 { title: 'array',   key: 'array',   type  : 'array',   value : [] },*/
                                 { key: '0-0-0-2', is_button : true }
@@ -42,10 +52,11 @@ export default class App extends Component {
                             title : '0-0-1',
                             key   : '0-0-1',
                             type  : 'array',
+                            name  : 'array nested',
 
                             value: [
-                                { title: '0-0-1-0', key: '0-0-1-0', type  : 'text', value : '' },
-                                { title: '0-0-1-1', key: '0-0-1-1', type  : 'text', value : '' },
+                                { title: '0-0-1-0', key: '0-0-1-0', type  : 'text', name:'e', value : 'e' },
+                                { title: '0-0-1-1', key: '0-0-1-1', type  : 'text', name:'f', value : 'f' },
                                 { key: '0-0-1-2', is_button : true }
                             ]
                         },
@@ -58,7 +69,7 @@ export default class App extends Component {
     }
 
     componentDidMount(){
-        this.setState({nodes:JSON.parse(localStorage.nodes||this.state.nodes)})
+        this.setState({nodes:JSON.parse(localStorage.nodes||JSON.stringify(this.state.nodes))})
     }
 
     componentWillUnmount(){
@@ -141,27 +152,12 @@ export default class App extends Component {
         )
     }
 
-    delete = key => {
-
-    }
-
-    generateIcon = node => {
-        const {expanded, children, dataRef:{value, type, is_button}={}} = node
-        // console.log('generateIcon', node)
-
-        /*if(Array.isArray(value) || Array.isArray(children) || type === 'array'){
-            debugger
-        }*/
-
-        return <Icon type={Array.isArray(value) ? (expanded ? 'minus-square' : 'plus-square'):'file'} />
-    }
-
     renderNodes = node => {
         let renderNode = item =>
             item.is_button ?
                 <Tree.TreeNode className={'end-handle'} dataRef={item} selectable={false}
                                title={<Button shape='circle' size='small' onClick={()=> {
-                                   node.splice(node.length -1, 0, {title: 'name ...', key: node[0].key.toString() + node.length.toString(), type: 'text', value: 'value ...'})
+                                   node.splice(node.length -1, 0, {title: 'name ...', key: node[0].key.toString() + node.length.toString(), type: 'text', value: ''})
                                    $this.setState({})
                                }} icon={'plus'}/>}
                                key={`button ${item.key}`} icon={this.generateIcon.bind(this)}/> :
@@ -171,6 +167,12 @@ export default class App extends Component {
 
         if(Array.isArray(node)) return node.map(el => renderNode(el))
         return renderNode(node)
+    }
+
+    generateIcon = node => <Icon type={Array.isArray((node.dataRef || {}).value) ? (node.expanded ? 'minus-square' : 'plus-square') : 'file'}/>
+
+    delete = key => {
+
     }
 
     render() {

@@ -10,6 +10,10 @@
       display: none;
     }
 
+    > li span.ant-tree-node-content-wrapper:hover:before{
+      background: #19171705 !important;
+    }
+
     .ant-tree-node-content-wrapper, .ant-tree-title{
       display: flex;
       justify-content: left;
@@ -19,12 +23,6 @@
         display: flex;
         justify-content: left;
         align-items: center;
-
-        p{
-          &:focus {
-            outline:none;
-          }
-        }
 
         .name, .content.text{
           width: 100px;
@@ -38,12 +36,18 @@
           }
 
           &:focus{
-            border: solid 1px #5297fc;
+            border: dashed 1px #5297fc;
           }
         }
 
         .name{
           margin-left: 5px;
+          //border: dashed 1px gainsboro;
+          border: none;
+
+          &:focus, &:hover{
+            border: dashed 1px gainsboro;
+          }
         }
 
         .ant-select-sm{
