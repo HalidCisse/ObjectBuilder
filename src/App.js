@@ -8,9 +8,8 @@ export default class App extends Component {
     constructor(props) {
         super(props)
         $this = this
-        this.nodeTypes = [
-            'text', 'boolean', 'number', 'array', 'type'
-        ]
+        this.complexTypes = ['array', 'type']
+        this.primitiveTypes = ['text', 'boolean', 'number']
 
         this.state = {
             nodes:[
@@ -25,14 +24,14 @@ export default class App extends Component {
                     title : '0-1',
                     key   : '0-1',
                     type  : 'boolean',
-                    name  : 'Top Node',
+                    name  : 'Top Boolean',
                     value : false
                 },
                 {
                     title : '0-0',
                     key   : '0-0',
                     type  : 'array',
-                    name  : 'array top',
+                    name  : 'Top Array ',
                     value: [
                         {
                             title : '0-0-0',
@@ -43,8 +42,7 @@ export default class App extends Component {
                             value: [
                                 { title: 'text',    key: 'text',    type  : 'text', name:'c',  value : 'c'},
                                 { title: 'boolean', key: 'boolean', type  : 'boolean', name:'d', value : false },
-                                /*{ title: 'number',  key: 'number',  type  : 'text',    value : 5 },
-                                { title: 'array',   key: 'array',   type  : 'array',   value : [] },*/
+                                /*{ title: 'number',  key: 'number',  type  : 'text',    value : 5 },*/
                                 { key: '0-0-0-2', is_button : true }
                             ]
                         },
@@ -100,16 +98,19 @@ export default class App extends Component {
                         node.value = e.target.checked
                         $this.setState({})
                     }}/>
+                case 'type':
                 case 'array':
                     return <span/>
                 case 'number':
-                case 'type':
-                    throw new Error(`${item.type} is not implemented`)
+                    return <Input className='content text' size="small"
+                                  defaultValue='value' placeholder="value"
+                                  value={node.value} onChange={()=> {}}
+                                  onInput={e=> {
+                                      node.value = parseFloat(e.target.value)
+                                      $this.setState({})
+                                  }}/>
                 default:
-                {
-                    debugger
                     throw new Error(item.type)
-                }
             }
         }
 
@@ -135,17 +136,16 @@ export default class App extends Component {
                             node.value = 0
                             break
                         case 'array':
+                        case 'type':
                             node.value = [
                                 {title: 'name ...', key: `${node.key}0`, type: 'text', value: 'value ...'},
                                 { key: `button ${node.key}`, is_button : true }
                             ]
                             break
-                        case 'type':
-                            break
                     }
                     $this.setState({})
                 }}>
-                    {this.nodeTypes.map(t=> <Select.Option key={t} value={t}>{t}</Select.Option>)}
+                    {this.primitiveTypes.concat(this.complexTypes).map(t=> <Select.Option key={t} value={t}>{t}</Select.Option>)}
                 </Select>
                 {renderContent(node)}
             </div>
@@ -157,7 +157,7 @@ export default class App extends Component {
             item.is_button ?
                 <Tree.TreeNode className={'end-handle'} dataRef={item} selectable={false}
                                title={<Button shape='circle' size='small' onClick={()=> {
-                                   node.splice(node.length -1, 0, {title: 'name ...', key: node[0].key.toString() + node.length.toString(), type: 'text', value: ''})
+                                   node.splice(node.length -1, 0, {title: 'name ...', key: node[0].key.toString() + node.length.toString(), type: 'text', parentType:item.type, value: ''})
                                    $this.setState({})
                                }} icon={'plus'}/>}
                                key={`button ${item.key}`} icon={this.generateIcon.bind(this)}/> :
