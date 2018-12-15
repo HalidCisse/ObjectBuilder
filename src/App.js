@@ -125,7 +125,7 @@ export default class App extends Component {
                                defaultValue='value' placeholder="value"
                                value={node.value} onChange={()=> {}}
                                onInput={e=> {
-                                   node.value = parseFloat(e.target.value)
+                                   node.value = parseFloat(e.target.value)||''
                                    $this.setState({})}}/>
                     </Tooltip>
                 default:
@@ -156,7 +156,7 @@ export default class App extends Component {
                             node.value = false
                             break
                         case 'number':
-                            node.value = 0
+                            node.value = ''
                             break
                         case 'array':
                         case 'type':

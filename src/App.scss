@@ -33,7 +33,7 @@
 
         .name, .content.text{
           width: 100px;
-          border: dashed 1px lightgrey;
+          border: none;
           border-radius: 5px;
           padding: 0 5px;
           outline:none;
@@ -42,14 +42,17 @@
             content: attr(data-placeholder);
           }
 
+          &:placeholder-shown {
+            border: dashed 1px lightgrey;
+          }
+
           &:focus{
-            border: dashed 1px #5297fc;
+            box-shadow: none;
           }
         }
 
         .name{
           margin-left: 5px;
-          //border: dashed 1px gainsboro;
           border: none;
 
           &:focus, &:hover{
@@ -68,7 +71,6 @@
 
           }
         }
-
       }
     }
 
@@ -90,11 +92,8 @@
       .ant-tree-node-content-wrapper{
         padding-left: 1px;
       }
-
     }
-
   }
-
 }
 
 
