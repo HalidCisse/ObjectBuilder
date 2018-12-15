@@ -1,11 +1,12 @@
 {
   "name": "objectbuilder",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
+    "node-sass": "^4.11.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-scripts": "2.1.1"
+    "react-scripts": "2.1.1",
+    "antd": "^3.11.2"
   },
   "scripts": {
     "start": "react-scripts start",
