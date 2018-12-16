@@ -3,7 +3,9 @@
 
 This project demo how to make dynamic property builder using React.
 
-![Screen shoot](https://someurl/imagelocation/image.png)
+![Screen shoot](https://github.com/HalidCisse/ObjectBuilder/raw/master/public/screenshoot/Screen%20Shot%202018-12-16%20at%201.20.18%20PM.png)
+
+![Screen shoot]()
 
 ### Run this project
 
