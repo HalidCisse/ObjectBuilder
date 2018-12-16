@@ -10,6 +10,18 @@
       display: none;
     }
 
+    .ant-tree-node-content-wrapper{
+      &:focus, &:hover{
+        .delete{
+          display: inline-block !important;
+        }
+      }
+    }
+
+    .ant-tree-node-selected:before{
+      background: #19171705 !important;
+    }
+
     .ant-select-selection{
       border: none;
       .ant-select-focused, .ant-select-selection:active{
@@ -17,7 +29,7 @@
       }
     }
 
-    > li span.ant-tree-node-content-wrapper:hover:before{
+    .ant-tree-node-content-wrapper:hover:before{
       background: #19171705 !important;
     }
 
@@ -57,6 +69,15 @@
 
         .name{
           margin-left: 5px;
+        }
+
+        .delete{
+          margin-left: 5px;
+          display: none;
+
+          &:focus, &:hover{
+            display: inline-block !important;
+          }
         }
 
         .ant-select-sm{

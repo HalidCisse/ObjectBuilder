@@ -44,12 +44,11 @@ export default class App extends Component {
                             title : '0-0-0',
                             key   : '0-0-0',
                             type  : 'array',
-                            name:'array nested',
+                            name:'Array nested',
 
                             value: [
                                 { title: 'text',    key: 'text',    type  : 'text', name:'c',  value : 'c'},
                                 { title: 'boolean', key: 'boolean', type  : 'boolean', name:'d', value : false },
-                                /*{ title: 'number',  key: 'number',  type  : 'text',    value : 5 },*/
                                 { key: '0-0-0-2', is_button : true }
                             ]
                         },
@@ -57,7 +56,7 @@ export default class App extends Component {
                             title : '0-0-1',
                             key   : '0-0-1',
                             type  : 'array',
-                            name  : 'array nested',
+                            name  : 'Array nested',
 
                             value: [
                                 { title: '0-0-1-0', key: '0-0-1-0', type  : 'text', name:'e', value : 'e' },
@@ -75,9 +74,11 @@ export default class App extends Component {
 
     componentDidMount(){
         this.setState({nodes:JSON.parse(localStorage.nodes||JSON.stringify(this.state.nodes))})
+        document.addEventListener('keydown', this.onDelete, false)
     }
 
     componentWillUnmount(){
+        document.removeEventListener('keydown', this.onDelete, false)
         localStorage.setItem('nodes', JSON.stringify(this.state.nodes))
     }
 
@@ -170,6 +171,12 @@ export default class App extends Component {
                     {this.primitiveTypes.concat(this.complexTypes).map(t=> <Select.Option key={t} value={t}>{t}</Select.Option>)}
                 </Select>
                 {renderContent(node)}
+                <Tooltip  title={'Delete this item'} placement="right">
+                    <Icon className='delete' type="minus-circle" onClick={()=>{
+                        node.deleted = true
+                        $this.setState({})
+                    }}/>
+                </Tooltip>
             </div>
         )
     }
@@ -183,24 +190,21 @@ export default class App extends Component {
                                    $this.setState({})
                                }} icon={'plus'}/>}
                                key={`button ${item.key}`} icon={this.generateIcon.bind(this)}/> :
-                <Tree.TreeNode title={this.renderNode(item)} key={item.key} dataRef={item} selectable={false} icon={this.generateIcon.bind(this)} >
+                <Tree.TreeNode title={this.renderNode(item)} key={item.key} dataRef={item}
+                               selectable={false} icon={this.generateIcon.bind(this)}>
                     { item.value && Array.isArray(item.value) ? this.renderNodes(item.value):null}
                 </Tree.TreeNode>
 
-        if(Array.isArray(node)) return node.map(el => renderNode(el))
+        if(Array.isArray(node)) return node.filter(n=>!n.deleted).map(el => renderNode(el))
         return renderNode(node)
     }
 
     generateIcon = node => <Icon type={Array.isArray((node.dataRef || {}).value) ? (node.expanded ? 'minus-square' : 'plus-square') : 'file'}/>
 
-    delete = key => {
-
-    }
-
     render() {
         return <div className="app">
             <header>
-                Hello This Is A Dynamic Property Builder By Halid Cisse
+                Hello, This Is A Dynamic Property Builder By Halid Cisse
             </header>
 
             <Tree.DirectoryTree
