@@ -2,7 +2,7 @@
 ## This project
 
 This project demo how to make dynamic property builder using React.
-See live [Here](https://zealous-williams-396c5c.netlify.com/)]
+See live [Here](https://zealous-williams-396c5c.netlify.com/)
 
 ![Screen shoot](https://github.com/HalidCisse/ObjectBuilder/raw/master/public/screenshot/1.png)
 
