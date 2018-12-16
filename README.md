@@ -3,9 +3,15 @@
 
 This project demo how to make dynamic property builder using React.
 
-![Screen shoot](https://github.com/HalidCisse/ObjectBuilder/raw/master/public/screenshoot/Screen%20Shot%202018-12-16%20at%201.20.18%20PM.png)
+![Screen shoot](https://github.com/HalidCisse/ObjectBuilder/raw/master/public/screenshot/1.png)
 
-![Screen shoot]()
+![Screen shoot](https://github.com/HalidCisse/ObjectBuilder/raw/master/public/screenshot/2.png)
+
+![Screen shoot](https://github.com/HalidCisse/ObjectBuilder/raw/master/public/screenshot/3.png)
+
+![Screen shoot](https://github.com/HalidCisse/ObjectBuilder/raw/master/public/screenshot/4.png)
+
+![Screen shoot](https://github.com/HalidCisse/ObjectBuilder/raw/master/public/screenshot/5.png)
 
 ### Run this project
 
