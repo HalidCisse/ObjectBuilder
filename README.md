@@ -4,7 +4,7 @@
 This project demo how to make dynamic property builder using React.
 See *OBuilder* live [Here](https://OBuilder.netlify.app/)
 
-See *select and comment* live [Here](https://select-and-commen.netlify.app/)
+See *select and comment* live [Here](https://select-and-comment.netlify.app/)
 
 ![Screen shoot](https://github.com/HalidCisse/ObjectBuilder/raw/master/public/screenshot/1.png)
 
